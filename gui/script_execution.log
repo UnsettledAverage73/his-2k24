@@ -1,0 +1,2 @@
+2024-08-24 12:15:09,588 - ERROR - Error loading configuration: [Errno 2] No such file or directory: 'config.yaml'
+2024-08-24 12:17:09,726 - ERROR - Error loading configuration: [Errno 2] No such file or directory: 'config.yaml'
