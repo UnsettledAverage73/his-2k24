@@ -1,0 +1,4 @@
+Script Name: /home/atharva/his-2k24/ubuntu/v22.04/initial_setup/fs-kernel-module-test.sh
+Execution Time: 2024-09-02 01:03:05
+Log File: log_fs-kernel-module-test.sh_20240902_010304.txt
+Status: Success

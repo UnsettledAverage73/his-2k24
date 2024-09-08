@@ -1,0 +1,128 @@
+
+- Audit Result:
+ ** PASS **
+
+ - module: "cramfs" doesn't exist in "/lib/modules/6.6.15-amd64/kernel/fs"
+ - module: "cramfs" doesn't exist in "/lib/modules/6.8.11-amd64/kernel/fs"
+
+
+
+ -- INFO --
+ - module: "freevxfs" exists in:
+ - "/lib/modules/6.6.15-amd64/kernel/fs"
+ - "/lib/modules/6.8.11-amd64/kernel/fs"
+
+- Audit Result:
+ ** FAIL **
+ - Reason(s) for audit failure:
+
+ - module: "freevxfs" is not deny listed
+ - module: "freevxfs" is loadable: "insmod /lib/modules/6.8.11-amd64/kernel/fs/freevxfs/freevxfs.ko.xz "
+
+
+- Correctly set:
+
+ - module: "freevxfs" is not loaded
+
+
+
+ -- INFO --
+ - module: "hfs" exists in:
+ - "/lib/modules/6.6.15-amd64/kernel/fs"
+ - "/lib/modules/6.8.11-amd64/kernel/fs"
+
+- Audit Result:
+ ** FAIL **
+ - Reason(s) for audit failure:
+
+ - module: "hfs" is not deny listed
+ - module: "hfs" is loadable: "insmod /lib/modules/6.8.11-amd64/kernel/fs/hfs/hfs.ko.xz "
+
+
+- Correctly set:
+
+ - module: "hfs" is not loaded
+
+
+
+ -- INFO --
+ - module: "hfsplus" exists in:
+ - "/lib/modules/6.6.15-amd64/kernel/fs"
+ - "/lib/modules/6.8.11-amd64/kernel/fs"
+
+- Audit Result:
+ ** FAIL **
+ - Reason(s) for audit failure:
+
+ - module: "hfsplus" is not deny listed
+ - module: "hfsplus" is loadable: "insmod /lib/modules/6.8.11-amd64/kernel/fs/hfsplus/hfsplus.ko.xz "
+
+
+- Correctly set:
+
+ - module: "hfsplus" is not loaded
+
+
+
+ -- INFO --
+ - module: "jffs2" exists in:
+ - "/lib/modules/6.6.15-amd64/kernel/fs"
+ - "/lib/modules/6.8.11-amd64/kernel/fs"
+
+- Audit Result:
+ ** FAIL **
+ - Reason(s) for audit failure:
+
+ - module: "jffs2" is not deny listed
+ - module: "jffs2" is loadable: "insmod /lib/modules/6.8.11-amd64/kernel/fs/jffs2/jffs2.ko.xz "
+
+
+- Correctly set:
+
+ - module: "jffs2" is not loaded
+
+
+
+ -- INFO --
+ - module: "squashfs" exists in:
+ - "/lib/modules/6.6.15-amd64/kernel/fs"
+ - "/lib/modules/6.8.11-amd64/kernel/fs"
+
+- Audit Result:
+ ** FAIL **
+ - Reason(s) for audit failure:
+
+ - module: "squashfs" is not deny listed
+ - module: "squashfs" is loadable: "insmod /lib/modules/6.8.11-amd64/kernel/fs/squashfs/squashfs.ko.xz "
+
+
+- Correctly set:
+
+ - module: "squashfs" is not loaded
+
+
+
+ -- INFO --
+ - module: "udf" exists in:
+ - "/lib/modules/6.6.15-amd64/kernel/fs"
+ - "/lib/modules/6.8.11-amd64/kernel/fs"
+
+- Audit Result:
+ ** FAIL **
+ - Reason(s) for audit failure:
+
+ - module: "udf" is not deny listed
+ - module: "udf" is loadable: "insmod /lib/modules/6.8.11-amd64/kernel/fs/udf/udf.ko.xz "
+
+
+- Correctly set:
+
+ - module: "udf" is not loaded
+
+
+- Audit Result:
+ ** PASS **
+
+ - module: "usb-storage" doesn't exist in "/lib/modules/6.6.15-amd64/kernel/fs"
+ - module: "usb-storage" doesn't exist in "/lib/modules/6.8.11-amd64/kernel/fs"
+
