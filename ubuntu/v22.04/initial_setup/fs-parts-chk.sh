@@ -5,15 +5,15 @@ chk_sep_part(){
 }
 
 chk_nodev(){
-  [ -z $(findmnt -kn $@ | grep -v nodev) ] && echo -e "\t- 'nodev' option is set on $@ partition." || echo -e "\t- 'nodev' option is not set on $@ partition."
+  [[ -z $(findmnt -kn $@ | grep -v nodev) ]] && echo -e "\t- 'nodev' option is set on $@ partition." || echo -e "\t- 'nodev' option is not set on $@ partition."
 }
 
 chk_nosuid(){
-  [ -z $(findmnt -kn $@ | grep -v nosuid) ] && echo -e "\t- 'nosuid' option is set on $@ partition." || echo -e "\t- 'nosuid' option is not set on $@ partition."
+  [[ -z $(findmnt -kn $@ | grep -v nosuid) ]] && echo -e "\t- 'nosuid' option is set on $@ partition." || echo -e "\t- 'nosuid' option is not set on $@ partition."
 }
 
 chk_noexec(){
-  [ -z $(findmnt -kn $@ | grep -v noexec) ] && echo -e "\t- 'noexec' option is set on $@ partition." || echo -e "\t- 'noexec' option is not set on $@ partition."
+  [[ -z $(findmnt -kn $@ | grep -v noexec) ]] && echo -e "\t- 'noexec' option is set on $@ partition." || echo -e "\t- 'noexec' option is not set on $@ partition."
 }
 
 fs_parts=('/tmp' '/dev/shm' '/home' '/var' '/var/tmp' '/var/log' '/var/log/audit')
