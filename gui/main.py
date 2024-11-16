@@ -1,17 +1,17 @@
-import tkinter as tk
-from tkinter import ttk, messagebox, filedialog
-import threading
-import subprocess
-import platform
+import tkinter as tk #gui
+from tkinter import ttk, messagebox, filedialog #ttk-theme widgets messagebox-Dialogue boxes like alerts or messages filedialog-for user to open file according to there selection 
+import threading #gui_responsive
+import subprocess #run external scripts or and cmd
+import platform #determine current os
 
 # Function to execute the script
-def execute_script(script_name, execution_label, output_text, progress_bar):
+def execute_script(script_name, execution_label, output_text, progress_bar): #execution_label:shows the current status #output_text:script_output or error #progress_bar:visuial indicator of progress
     try:
         execution_label.config(text=f"Execution started for {script_name}")
 
         if platform.system() == "Windows":
             process = subprocess.Popen([script_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, text=True)
-        else:  # Assume Linux/Unix
+        else:  # Assume Linux
             process = subprocess.Popen(["bash", script_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
         progress = 0
@@ -49,7 +49,7 @@ def execute_script(script_name, execution_label, output_text, progress_bar):
         messagebox.showerror("Error", f"Error occurred while running {script_name}: {str(e)}")
 
 # Function to trigger script execution
-def on_execute_button_click(execution_label, output_text, progress_bar):
+def on_execute_button_click(execution_label, output_text, progress_bar): #output_text:clear output text box to remove old output.
     selected_script = script_combobox.get()
     if not selected_script:
         messagebox.showwarning("No Script Selected", "Please select a script to execute.")
