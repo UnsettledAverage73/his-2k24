@@ -8,12 +8,12 @@ import platform
 
 class DirectoryNavigator:
     def __init__(self, root):
-	# -----------------------Basic APP Layout-----------------------------
+        # -----------------------Basic APP Layout-----------------------------
         self.root = root
-        self.root.title("Simple gui for fix CIS Benchmarks")
+        self.root.title("Simple GUI for Fix CIS Benchmarks")
         self.root.geometry("1000x700")
         self.root.configure(bg="black")
-        
+
         # -----------------------Initialize paths------------------------------
         self.default_path = os.path.expanduser("~/his-2k24")
         self.current_path = self.default_path
@@ -25,6 +25,7 @@ class DirectoryNavigator:
 
         # -----------------------Load initial directory-----------------------
         self.update_directory_view()
+        self.update_os_label()
 
     def create_gui(self):
         # ------------------Left Frame: Navigation and Scripts----------------
@@ -32,8 +33,13 @@ class DirectoryNavigator:
         self.left_frame.pack(side="left", fill="y")
 
         self.folder_path_label = tk.Label(
-            self.left_frame, text=f"Current Folder : {self.current_path}", #add changable folder means user can have to change folder
-            fg="white", bg="black", wraplength=250, anchor="w", justify="left"
+            self.left_frame,
+            text=f"Current Folder : {self.current_path}",
+            fg="white",
+            bg="black",
+            wraplength=250,
+            anchor="w",
+            justify="left"
         )
         self.folder_path_label.pack(pady=5, padx=5, anchor="w")
 
@@ -57,7 +63,8 @@ class DirectoryNavigator:
         self.right_frame = tk.Frame(self.root, bg="black")
         self.right_frame.pack(side="right", fill="both", expand=True)
 
-        tk.Label(self.right_frame, text="OS : ", fg="white", bg="black").pack(pady=5)
+        self.os_label = tk.Label(self.right_frame, text="OS: Detecting...", fg="white", bg="black", font=("Arial", 12, "bold"))
+        self.os_label.pack(pady=5)
 
         self.execution_label = tk.Label(self.right_frame, text="Execution status", fg="white", bg="black")
         self.execution_label.pack(pady=5)
@@ -107,6 +114,12 @@ class DirectoryNavigator:
 
         except Exception as e:
             messagebox.showerror("Error", f"Unable to load folder contents: {str(e)}")
+
+    def update_os_label(self):
+        """Update the OS label with the current platform information."""
+        os_name = platform.system()
+        os_version = platform.version()
+        self.os_label.config(text=f"OS: {os_name} (Version: {os_version})")
 
     def go_back(self):
         """Navigate to the previous path."""
@@ -182,4 +195,3 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = DirectoryNavigator(root)
     root.mainloop()
-
