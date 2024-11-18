@@ -8,30 +8,31 @@ import platform
 
 class DirectoryNavigator:
     def __init__(self, root):
+	# -----------------------Basic APP Layout-----------------------------
         self.root = root
         self.root.title("Simple gui for fix CIS Benchmarks")
         self.root.geometry("1000x700")
         self.root.configure(bg="black")
         
-        # Initialize paths
+        # -----------------------Initialize paths------------------------------
         self.default_path = os.path.expanduser("~/his-2k24")
         self.current_path = self.default_path
         self.back_stack = []
         self.forward_stack = []
 
-        # Create GUI components
+        # ------------------------Create GUI components----------------------
         self.create_gui()
 
-        # Load initial directory
+        # -----------------------Load initial directory-----------------------
         self.update_directory_view()
 
     def create_gui(self):
-        # Left Frame: Navigation and Scripts
+        # ------------------Left Frame: Navigation and Scripts----------------
         self.left_frame = tk.Frame(self.root, bg="black", width=300)
         self.left_frame.pack(side="left", fill="y")
 
         self.folder_path_label = tk.Label(
-            self.left_frame, text=f"Current Folder: {self.current_path}", 
+            self.left_frame, text=f"Current Folder : {self.current_path}", #add changable folder means user can have to change folder
             fg="white", bg="black", wraplength=250, anchor="w", justify="left"
         )
         self.folder_path_label.pack(pady=5, padx=5, anchor="w")
@@ -39,7 +40,7 @@ class DirectoryNavigator:
         self.script_list_frame = tk.Frame(self.left_frame, bg="black")
         self.script_list_frame.pack(fill="both", expand=True, padx=5)
 
-        # Navigation Buttons
+        # ----------------------Navigation Buttons----------------------------
         button_frame = tk.Frame(self.left_frame, bg="black")
         button_frame.pack(fill="x", padx=5, pady=5)
 
@@ -52,11 +53,11 @@ class DirectoryNavigator:
         self.refresh_button = tk.Button(button_frame, text="🔄 Refresh", command=self.update_directory_view)
         self.refresh_button.pack(side="left", padx=5)
 
-        # Right Frame: Execution Output
+        # ------------------Right Frame: Execution Output----------------------
         self.right_frame = tk.Frame(self.root, bg="black")
         self.right_frame.pack(side="right", fill="both", expand=True)
 
-        tk.Label(self.right_frame, text="Execution Output", fg="white", bg="black").pack(pady=5)
+        tk.Label(self.right_frame, text="OS : ", fg="white", bg="black").pack(pady=5)
 
         self.execution_label = tk.Label(self.right_frame, text="Execution status", fg="white", bg="black")
         self.execution_label.pack(pady=5)
@@ -64,29 +65,29 @@ class DirectoryNavigator:
         self.output_text = tk.Text(self.right_frame, bg="black", fg="white", wrap="word")
         self.output_text.pack(fill="both", expand=True, padx=5, pady=5)
 
-        # Configure green text tag
+        # --------------------Configure green text tag-------------------------
         self.output_text.tag_config("green_text", foreground="#00FF00")
 
         self.progress_bar = ttk.Progressbar(self.right_frame, orient="horizontal", mode="determinate", length=300)
         self.progress_bar.pack(pady=10)
 
     def update_directory_view(self):
-        """Update the list of directories and files."""
+        """-------------Update the list of directories and files.-------------"""
         try:
-            # Update path label
+            # ---------------------Update path label---------------------------
             self.folder_path_label.config(text=f"Current Folder: {self.current_path}")
 
-            # Clear the old widgets in the script list frame
+            # --------Clear the old widgets in the script list frame----------
             for widget in self.script_list_frame.winfo_children():
                 widget.destroy()
 
-            # List directories and files
+            # -----------------List directories and files--------------------
             items = os.listdir(self.current_path)
             if items:
                 for item in sorted(items):
                     full_path = os.path.join(self.current_path, item)
                     if os.path.isdir(full_path):
-                        # Create a button for navigating into subfolders
+                        # -----Create a button for navigating into subfolders--
                         btn = tk.Button(
                             self.script_list_frame, text=f"[Folder] {item}", bg="black", fg="yellow", relief="flat",
                             command=lambda p=full_path: self.navigate_to(p)
@@ -134,13 +135,13 @@ class DirectoryNavigator:
     def execute_script(self, script_path):
         """Execute the selected script."""
         try:
-            # Clear previous output
+            # ----------------Clear previous output----------------------------
             self.output_text.delete("1.0", tk.END)
 
             self.execution_label.config(text=f"Executing: {script_path}")
             if platform.system() == "Windows":
                 process = subprocess.Popen([script_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, text=True)
-            else:  # Assume Linux
+            else:  # ------------------Assume Linux----------------------------
                 process = subprocess.Popen(["bash", script_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
             progress = 0
@@ -176,7 +177,7 @@ class DirectoryNavigator:
         self.forward_button.config(state=tk.NORMAL if self.forward_stack else tk.DISABLED)
 
 
-# Run the application
+# ------------------------------Run the application----------------------------
 if __name__ == "__main__":
     root = tk.Tk()
     app = DirectoryNavigator(root)
