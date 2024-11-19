@@ -13,11 +13,17 @@ fix_tmpfs_part(){
 fix_tmpfs_opts(){
   part=$(echo $@ | sed 's/\//\\\//g')
   if [[ -z $(findmnt -kn $@ | grep nodev) ]];then
-    sed "/$part/c\tmpfs\t/tmp\ttmpfs\tdefaults,rw,nosuid,nodev,noexec,relatime\t0\t0" /etc/fstab
+    sed "/$part/c\tmpfs\t/tmp\ttmpfs\tdefaults,rw,nosuid,nodev,noexec,relatime\t0\t0" -i /etc/fstab
+    mount -o remount $@
+    echo -e "\t- [nodev,nosuid,noexec] options correctly set for $@"
   elif [[ -z $(findmnt -kn $@ | grep -v nosuid) ]];then
-    sed "/$part/c\tmpfs\t/tmp\ttmpfs\tdefaults,rw,nosuid,nodev,noexec,relatime\t0\t0" /etc/fstab
+    sed "/$part/c\tmpfs\t/tmp\ttmpfs\tdefaults,rw,nosuid,nodev,noexec,relatime\t0\t0" -i /etc/fstab
+    mount -o remount $@
+    echo -e "\t- [nodev,nosuid,noexec] options correctly set for $@"
   elif [[ -z $(findmnt -kn $@ | grep -v noexec) ]];then
-    sed "/$part/c\tmpfs\t/tmp\ttmpfs\tdefaults,rw,nosuid,nodev,noexec,relatime\t0\t0" /etc/fstab
+    sed "/$part/c\tmpfs\t/tmp\ttmpfs\tdefaults,rw,nosuid,nodev,noexec,relatime\t0\t0" -i /etc/fstab
+    mount -o remount $@
+    echo -e "\t- [nodev,nosuid,noexec] options correctly set for $@"
   else
     echo -e "\t- No remedition required for $@. All options are set properly."
   fi 
