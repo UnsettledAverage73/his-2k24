@@ -35,10 +35,10 @@ fs_kernel_module_chk() {
     fi
   }
   # Check if the module exists on the system
-  echo -e "\n - remediation of module: \"$l_mname\" started.\n"
+  echo -e "\nRemediation of module: \"$l_mname\" started."
   for l_mdir in $l_mpath; do
     if [ -d "$l_mdir/$l_mndir" ] && [ -n "$(ls -A $l_mdir/$l_mndir)" ]; then
-      echo -e " - module: \"$l_mname\" exists in \"$l_mdir\"\n - checking if disabled..."
+      echo -e "\t- module: \"$l_mname\" exists in \"$l_mdir\"\n - checking if disabled..."
       module_deny_fix
       if [ "$l_mdir" = "/lib/modules/$(uname -r)/kernel/$l_mtype" ]; then
         module_loadable_fix
@@ -52,9 +52,9 @@ fs_kernel_module_chk() {
   #echo -e "\n- Audit Result:\n ** PASS **\n\n"
 }
 
-fs_kernel_module=("cramfs" "freevxfs" "hfs" "hfsplus" "jffs2" "squashfs" "udf" "usb-storage")
+# fs_kernel_module=("cramfs" "freevxfs" "hfs" "hfsplus" "jffs2" "squashfs" "udf" "usb-storage")
 
-for module in "${fs_kernel_module[@]}"; do
+for module in "$@"; do
   fs_kernel_module_chk $module
 done
 
