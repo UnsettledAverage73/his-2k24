@@ -13,8 +13,8 @@ fs_kernel_module_chk() {
     l_loadable="$(modprobe -n -v "$l_mname")"
     [ "$(wc -l <<<"$l_loadable")" -gt "1" ] && l_loadable="$(grep -P -"(^\h*install|\b$l_mname)\b" <<<"$l_loadable")"
     if ! grep -Pq -- '^\h*install \/bin\/(true|false)' <<<"$l_loadable"; then
-      echo -e " - module: \"$l_mname\" is loadable: \"$l_loadable\""
-      echo -e " - setting module: \"$l_mname\" to be not loadable"
+      echo -e "\t- module: \"$l_mname\" is loadable: \"$l_loadable\""
+      echo -e "\t- setting module: \"$l_mname\" to be not loadable"
       echo -e "install $l_mname /bin/false" >>/etc/modprobe.d/"$l_mpname".conf
     fi
   }
@@ -29,8 +29,8 @@ fs_kernel_module_chk() {
   module_deny_fix() {
     # If the module isn't deny listed, denylist the module
     if ! modprobe --showconfig | grep -Pq -- "^\h*blacklist\h+$l_mpname\b"; then
-      echo -e " - module: \"$l_mname\" is not deny listed"
-      echo -e " - deny listing \"$l_mname\""
+      echo -e "\t- module: \"$l_mname\" is not deny listed"
+      echo -e "\t- deny listing \"$l_mname\""
       echo -e "blacklist $l_mname" >>/etc/modprobe.d/"$l_mpname".conf
     fi
   }
@@ -38,17 +38,17 @@ fs_kernel_module_chk() {
   echo -e "\nRemediation of module: \"$l_mname\" started."
   for l_mdir in $l_mpath; do
     if [ -d "$l_mdir/$l_mndir" ] && [ -n "$(ls -A $l_mdir/$l_mndir)" ]; then
-      echo -e "\t- module: \"$l_mname\" exists in \"$l_mdir\"\n - checking if disabled..."
+      echo -e "\t- module: \"$l_mname\" exists in \"$l_mdir\"\n\t- checking if disabled..."
       module_deny_fix
       if [ "$l_mdir" = "/lib/modules/$(uname -r)/kernel/$l_mtype" ]; then
         module_loadable_fix
         module_loaded_fix
       fi
     else
-      echo -e "\n - module: \"$l_mname\" doesn't exist in \"$l_mdir\"\n"
+      echo -e "\t- module: \"$l_mname\" doesn't exist in \"$l_mdir\""
     fi
   done
-  echo -e "\n - remediation of module: \"$l_mname\" complete\n"
+  echo -e "Remediation of module: \"$l_mname\" complete\n"
   #echo -e "\n- Audit Result:\n ** PASS **\n\n"
 }
 

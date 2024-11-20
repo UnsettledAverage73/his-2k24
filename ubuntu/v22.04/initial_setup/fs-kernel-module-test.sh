@@ -52,9 +52,9 @@ fs_kernel_module_chk() {
   # Report results. If no failures output in l_output2, we pass
   [ -n "$l_output3" ] && echo -e "\tModule: \"$l_mname\" exists in:$l_output3"
   if [ -z "$l_output2" ]; then
-    echo -e "\t- Audit Result: **PASS**\n\t $l_output"
+    echo -e "\t- Audit Result: **PASS** for \"$l_mname\"\n\t $l_output"
   else
-    echo -e "\t- Audit Result: **FAIL**\n\t - Reason(s) for audit failure:\n\t$l_output2"
+    echo -e "\t- Audit Result: **FAIL** for \"$l_mname\"\n\t - Reason(s) for audit failure:\n\t$l_output2"
     [ -n "$l_output" ] && echo -e "\t- Correctly set:\t$l_output"
   fi
 }
