@@ -59,7 +59,7 @@ profiles-chk(){
     output_p="$output_p\n\t - $(apparmor_status | grep -E 'profiles.*loaded')\n\t - $(apparmor_status | grep -E 'profiles.*enforce')"
     logvr=1
   else
-    output_p="$output_p\n\t - $(apparmor_status | grep -E 'profiles.*loaded')\n\t - $(apparmor_status | grep -E 'profiles.*enforce')"
+    output_f="$output_f\n\t - $(apparmor_status | grep -E 'profiles.*loaded')\n\t - $(apparmor_status | grep -E 'profiles.*enforce')"
     logvr=0
   fi
 

@@ -1,18 +1,20 @@
 #!/bin/bash
 
-profiles-rem(){
-  local output_p=''
-  local output_f=''
-  local logvr=''
-
-  echo -e "- remidition for apparmor profiles:"
-  if [[ "$p_loaded" -eq "$p_enforce" ]]; then
-    output_p="$output_p\n\t - $(apparmor_status | grep -E 'profiles.*loaded')\n\t - $(apparmor_status | grep -E 'profiles.*enforce')"
-    logvr=1
-  else
-    aa-enforce /etc/apparmor.d/*  
-    output_p="$output_p\n\t - $(apparmor_status | grep -E 'profiles.*loaded')\n\t - $(apparmor_status | grep -E 'profiles.*enforce')"
-    logvr=0
+installed-chk(){
+  echo -e "- Remidiation of apparmor installation:"
+  if [[ -z "$(dpkg-query -s apparmor)" ]]; then
+    apt install apparmor -y &> /dev/null && echo -e "\t- Remidiation: **SUCCESS**" || echo -e "\t- Remidiation: **FAILED**"
   fi
 
+  echo -e "- Remidiation of apparmor-utils installation:"
+  if [[ -z "$(dpkg-query -s apparmor-utils 2> /dev/null)" ]]; then
+    apt install apparmor-utils -y &> /dev/null && echo -e "\t- Remidiation: **SUCCESS**" || echo -e "\t- Remidiation: **FAILED**"
+  fi
+}
+
+profiles-rem(){
+  echo -e "- Remidiation for apparmor profiles:"
+  if [[ "$p_loaded" -ne "$p_enforce" ]]; then
+    aa-enforce /etc/apparmor.d/* && echo -e "\t- Remidiation: **SUCCESS**" || echo -e "\t- Remidiation: **FAILED**"
+  fi
 }
