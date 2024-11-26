@@ -10,6 +10,8 @@ installed-rem(){
   fi
 }
 
+
+
 pkgs=('prelink' 'apport')
 for pkg in "${pkgs[@]}";do 
   installed-rem "$pkg"
