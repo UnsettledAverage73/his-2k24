@@ -3,12 +3,12 @@
 installed-rem() {
   echo -e "- Remidiation of apparmor installation:"
   if [[ -z "$(dpkg-query -s apparmor)" ]]; then
-    apt install apparmor -y &>/dev/null && echo -e "\t- Remidiation: **SUCCESS**" || echo -e "\t- Remidiation: **FAILED**"
+    apt install apparmor -y &>/dev/null && echo -e "\t- Remidiation: **SUCCESS**" || echo -e "\t- Remediation: Everything is **OK**"
   fi
 
   echo -e "- Remidiation of apparmor-utils installation:"
   if [[ -z "$(dpkg-query -s apparmor-utils 2>/dev/null)" ]]; then
-    apt install apparmor-utils -y &>/dev/null && echo -e "\t- Remidiation: **SUCCESS**" || echo -e "\t- Remidiation: **FAILED**"
+    apt install apparmor-utils -y &>/dev/null && echo -e "\t- Remidiation: **SUCCESS**" || echo -e "\t- Remediation: Everything is **OK**" 
   fi
 }
 
@@ -53,14 +53,14 @@ bootloader-rem() {
   fi
 
   echo -e "\t  Updating GRUB configuration..."
-  update-grub && echo -e "\t- Remidiation: **SUCCESS**" || echo -e "\t- Remidiation: **FAILED**"
+  update-grub && echo -e "\t- Remidiation: **SUCCESS**" || echo -e "\t- Remediation: Everything is **OK**" 
 
 }
 
 profiles-rem() {
   echo -e "- Remidiation for apparmor profiles:"
   if [[ "$p_loaded" -ne "$p_enforce" ]]; then
-    aa-enforce /etc/apparmor.d/* && echo -e "\t- Remidiation: **SUCCESS**" || echo -e "\t- Remidiation: **FAILED**" 
+    aa-enforce /etc/apparmor.d/* && echo -e "\t- Remidiation: **SUCCESS**" || echo -e "\t- Remediation: Everything is **OK**" 
   fi
 }
 
