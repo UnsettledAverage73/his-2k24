@@ -1,0 +1,26 @@
+# Remedi.ps1
+# Description: Sets 'Windows Firewall: Public: Inbound connections' to Block (default).
+
+# Define registry path and value
+$regPath = "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile"
+$regValue = "DefaultInboundAction"
+$newValue = 1  # 1 means Block (default)
+
+# Ensure the registry path exists
+if (-not (Test-Path -Path $regPath)) {
+    try {
+        New-Item -Path $regPath -Force | Out-Null
+        Write-Host "INFO: Created missing registry path: $regPath." -ForegroundColor Yellow
+    } catch {
+        Write-Host "ERROR: Failed to create registry path: $regPath. $_" -ForegroundColor Red
+        exit
+    }
+}
+
+# Set the registry value to block all inbound connections that do not match a rule
+try {
+    Set-ItemProperty -Path $regPath -Name $regValue -Value $newValue
+    Write-Host "SUCCESS: 'Windows Firewall: Public: Inbound connections' has been set to Block (default)." -ForegroundColor Green
+} catch {
+    Write-Host "ERROR: Failed to configure 'Windows Firewall: Public: Inbound connections'. $_" -ForegroundColor Red
+}
