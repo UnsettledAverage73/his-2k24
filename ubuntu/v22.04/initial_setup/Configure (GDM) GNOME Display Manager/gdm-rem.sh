@@ -27,18 +27,14 @@ banner-rem() {
       echo "creating gdm keyfile for machine-wide settings"
       if ! grep -Piq -- '^\h*banner-message-enable\h*=\h*' /etc/dconf/db/$l_gdmprofile.d/*; then
         l_kfile="/etc/dconf/db/$l_gdmprofile.d/01-banner-message"
-        echo -e "\n[org/gnome/login-screen]\nbanner-message-enable=true" >>"$l_kfile"
+        echo -e "\n[org/gnome/login-screen]\nbanner-message-enable=true" >> "$l_kfile"
       else
-        l_kfile="$(
-          grep -Pil -- '^\h*banner-message-enable\h*=\h*'
-          /etc/dconf/db/$l_gdmprofile.d/*
-        )"
+        l_kfile="$(grep -Pil -- '^\h*banner-message-enable\h*=\h*' /etc/dconf/db/$l_gdmprofile.d/*)"
         ! grep -Pq '^\h*\[org\/gnome\/login-screen\]' "$l_kfile" && sed -ri '/^\s*bannermessage-enable/ i\[org/gnome/login-screen]' "$l_kfile"
         ! grep -Pq '^\h*banner-message-enable\h*=\h*true\b' "$l_kfile" && sed -ri
         's/^\s*(banner-message-enable\s*=\s*)(\S+)(\s*.*$)/\1true \3//' "$l_kfile"
         #
-        sed -ri '/^\s*\[org\/gnome\/login-screen\]/ a\\nbanner-message-enable=true'
-        "$l_kfile"
+        sed -ri '/^\s*\[org\/gnome\/login-screen\]/ a\\nbanner-message-enable=true' "$l_kfile"
       fi
     fi
     if ! grep -Piq "^\h*banner-message-text=[\'\"]+\S+" "$l_kfile"; then
@@ -50,4 +46,21 @@ banner-rem() {
   fi
 }
 
-banner-rem
+lock-rem(){
+  l_delay=$(gsettings get org.gnome.desktop.screensaver lock-delay | awk '{ print $2 }')
+  i_delay=$(gsettings get org.gnome.desktop.session idle-delay | awk '{ print $2 }')
+  logvr=0
+
+  [[ "$l_delay" -le 5 ]] && logvr=1 || gsettings set org.gnome.desktop.screensaver lock-delay 5
+
+  [[ "$i_delay" -le 900 && "$i_delay" -ne 0 ]] && logvr=1 || gsettings set org.gnome.desktop.session idle-delay 900
+
+  echo -e "\n- Remediation for GDM screen lock delay:"
+  if [[ "$logvr" -eq 0 ]]; then
+    dconf update && echo -e "\t- Remediation: **SUCCESS**"
+  else
+    echo -e "\t- Remediation: Everything is **OK**"
+  fi
+}
+
+# banner-rem
