@@ -1,4 +1,4 @@
-Audit script according to CIS benchmarks
+~~~~~~~~~~Audit script according to CIS benchmarks~~~~~~
 
 processing.....
 
@@ -9,3 +9,4 @@ cd gui
 sudo apt install python3-tk
 
 python main.py
+
