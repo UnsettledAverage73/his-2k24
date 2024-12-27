@@ -1,5 +1,4 @@
 ~~~~~~~~~~Audit script according to CIS benchmarks~~~~~~
-
 processing.....
 
 -----------How to run gui----------
