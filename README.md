@@ -1,5 +1,4 @@
-# Automatic CIS Benchmark Audit Tool
-
+# Build an GUI to Automates the auditing of CIS (Center for Internet Security)
 ## Overview
 This project automates the auditing of CIS (Center for Internet Security) benchmark across multiple operating systems. It provides a GUI for ease of use, built using **PySide6**. The tool supports the following platforms:
 - **RHEL**: Versions 8 and 9
