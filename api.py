@@ -4,6 +4,10 @@ from inference import (
     get_system_status, execute_script, run_complete_check, get_processes,
     create_backup, list_backups, delete_backup, get_audit_history, execute_on_devices
 )
+from datetime import datetime
+from typing import List, Dict
+
+import uuid
 import os
 
 app = FastAPI()
@@ -88,3 +92,7 @@ def backup():
 @app.get("/history")
 def history():
     return get_audit_history() 
+
+@app.get("/reports")
+def report():
+    return get_report()
