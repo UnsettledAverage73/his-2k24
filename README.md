@@ -82,3 +82,5 @@ We welcome contributions! Please follow these steps:
 - Add multi-threading support for faster audits.
 - Improve reporting features (e.g., export as PDF).
 - Support additional operating systems.
+
+---------------------------------------------------------------------------
