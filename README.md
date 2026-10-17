@@ -4,6 +4,7 @@
 [![Red Hat Enterprise Linux](https://img.shields.io/badge/RHEL-8%20%7C%209-CC0000?style=for-the-badge&logo=redhat&logoColor=white)](https://www.redhat.com/)
 [![Ubuntu](https://img.shields.io/badge/Ubuntu%20Server-20.04%20%7C%2022.04-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)](https://ubuntu.com/server)
 [![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![CI](https://github.com/UnsettledAverage73/his-2k24/actions/workflows/ci.yml/badge.svg)](https://github.com/UnsettledAverage73/his-2k24/actions/workflows/ci.yml)
 [![Smart India Hackathon](https://img.shields.io/badge/SIH%202024-National%20Finalist%20(NTRO)-FF9933?style=for-the-badge)](https://sih.gov.in/)
 
 An automated **Center for Internet Security (CIS) Benchmark** compliance evaluation and remediation engine built for enterprise Linux infrastructure (**RHEL 8/9**, **Ubuntu Server**, and Windows). Recognized as a **National Finalist at Smart India Hackathon (SIH) 2024** for the **NTRO (National Technical Research Organisation)** problem statement.
