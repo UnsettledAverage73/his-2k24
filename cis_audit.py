@@ -40,11 +40,14 @@ CRITICAL_CONFIG_PATHS = [
 class ProductionSafetyManager:
     """Manages pre-flight atomic snapshots, system health checks, and zero-breakage rollbacks."""
 
-    def __init__(self, snapshot_root: Path = None):
-        if snapshot_root:
-            self.snapshot_root = Path(snapshot_root)
+    def __init__(self, snapshot_root: Path = None, backup_root: Path = None):
+        root = snapshot_root or backup_root
+        if root:
+            self.snapshot_root = Path(root)
         else:
             self.snapshot_root = Path("/var/backups/cis_snapshots") if os.access("/var/backups", os.W_OK) else Path("/tmp/cis_snapshots")
+        self.snapshot_root.mkdir(parents=True, exist_ok=True)
+        self.backup_root = self.snapshot_root
         self.snapshot_dir = None
         self.manifest = {}
 
@@ -59,15 +62,16 @@ class ProductionSafetyManager:
         except Exception:
             return ""
 
-    def create_snapshot(self) -> Path:
+    def create_snapshot(self, target_paths: list = None) -> Path:
         """Create timestamped snapshot of critical enterprise configuration files."""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         self.snapshot_dir = self.snapshot_root / f"snapshot_{timestamp}"
         self.snapshot_dir.mkdir(parents=True, exist_ok=True)
 
+        paths_to_backup = target_paths if target_paths is not None else CRITICAL_CONFIG_PATHS
         print(f"\n[+] Production Safety: Creating configuration snapshot in {self.snapshot_dir} ...")
 
-        for target_path_str in CRITICAL_CONFIG_PATHS:
+        for target_path_str in paths_to_backup:
             target_path = Path(target_path_str)
             if not target_path.exists():
                 continue
@@ -152,8 +156,11 @@ class ProductionSafetyManager:
 
         # Reload system daemons
         if shutil.which("systemctl"):
-            subprocess.run(["systemctl", "daemon-reload"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            subprocess.run(["systemctl", "restart", "sshd"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            try:
+                subprocess.run(["systemctl", "daemon-reload"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=3)
+                subprocess.run(["systemctl", "restart", "sshd"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=3)
+            except Exception:
+                pass
 
         print(f"[✓] Rollback complete: {restored_count} files restored. Daemons refreshed.\n")
         return True
